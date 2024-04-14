@@ -1,0 +1,69 @@
+Imports System.Data.SqlClient
+Imports System.Windows.Forms
+
+Public Class Form1
+    Private WithEvents DataGridView1 As New DataGridView()
+    Private connectionString As String = "Server=localhost;Database=root;User Id=root;Password=root;"
+    Private connection As SqlConnection
+    Private adapter As SqlDataAdapter
+    Private WithEvents Button1 As New Button()
+
+    Public Sub New()
+        InitializeComponent()
+        InitializeDataGridView()
+        InitializeButton()
+        CreateConnection()
+    End Sub
+
+    Private Sub InitializeDataGridView()
+        DataGridView1.Location = New Point(10, 10)
+        DataGridView1.Size = New Size(400, 200)
+        Me.Controls.Add(DataGridView1)
+    End Sub
+
+    Private Sub InitializeButton()
+        Button1.Text = "Update Matches for Rohit Sharma"
+        Button1.Location = New Point(10, 220)
+        Me.Controls.Add(Button1)
+    End Sub
+
+    Private Sub CreateConnection()
+        connection = New SqlConnection(connectionString)
+        Try
+            connection.Open()
+            adapter = New SqlDataAdapter("SELECT * FROM Player", connection)
+            Dim builder As New SqlCommandBuilder(adapter)
+            Dim table As New DataTable()
+            adapter.Fill(table)
+            DataGridView1.DataSource = table
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            If connection.State = ConnectionState.Open Then
+                connection.Close()
+            End If
+        End Try
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        UpdateMatchesForRohitSharma()
+    End Sub
+
+    Private Sub UpdateMatchesForRohitSharma()
+        Dim query As String = "UPDATE Player SET no_of_matches = @Matches WHERE PName = 'Rohit Sharma'"
+        connection = New SqlConnection(connectionString)
+        Try
+            connection.Open()
+            Dim command As New SqlCommand(query, connection)
+            command.Parameters.AddWithValue("@Matches", 50) ' Update the number of matches for Rohit Sharma
+            command.ExecuteNonQuery()
+            MessageBox.Show("Number of matches updated for Rohit Sharma.")
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message)
+        Finally
+            If connection.State = ConnectionState.Open Then
+                connection.Close()
+            End If
+        End Try
+    End Sub
+End Class
