@@ -1,0 +1,32 @@
+
+package com.mycompany.slip12;
+
+
+
+public class Slip12 extends Thread {
+    private String threadName;
+
+    public Slip12(String name){
+        this.threadName = name;
+    }
+
+    public void run(){
+        System.out.println("Thread " + threadName + " is running.");
+        int sleepTime = (int) (Math.random()* 5000);
+        System.out.println("Thread " + threadName + " will sleep for " + sleepTime + " milliseconds.");
+        try {
+            Thread.sleep(sleepTime);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Thread " + threadName + " is terminating.");
+    }
+
+    public static void main(String[] args) {
+        Slip12 thread1 = new Slip12("Thread1");
+        Slip12 thread2 = new Slip12("Thread2");
+
+        thread1.start();
+        thread2.start();
+    }
+}
