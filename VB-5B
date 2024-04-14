@@ -1,0 +1,42 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplication1._Default" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Loan Calculator</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <h2>Loan Calculator</h2>
+            <asp:TextBox ID="txtLoanAmount" runat="server" placeholder="Loan Amount"></asp:TextBox>
+            <asp:TextBox ID="txtInterestRate" runat="server" placeholder="Interest Rate"></asp:TextBox>
+            <asp:TextBox ID="txtDuration" runat="server" placeholder="Duration (in years)"></asp:TextBox>
+            <asp:Button ID="btnCalculate" runat="server" Text="Calculate" OnClick="btnCalculate_Click" />
+            <br />
+            <asp:Label ID="lblResult" runat="server"></asp:Label>
+        </div>
+    </form>
+</body>
+</html>
+
+<script runat="server">
+    protected void btnCalculate_Click(object sender, EventArgs e)
+    {
+        // Perform validation
+        decimal loanAmount, interestRate;
+        int duration;
+        if (!decimal.TryParse(txtLoanAmount.Text, out loanAmount) || !decimal.TryParse(txtInterestRate.Text, out interestRate) || !int.TryParse(txtDuration.Text, out duration))
+        {
+            lblResult.Text = "Please enter valid numeric values for all fields.";
+            return;
+        }
+
+        // Calculate simple interest
+        decimal simpleInterest = (loanAmount * interestRate * duration) / 100;
+
+        // Display result
+        lblResult.Text = "Simple Interest: " + simpleInterest.ToString("C");
+    }
+</script>
