@@ -1,0 +1,66 @@
+import java.applet.Applet;
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class TrafficSignal extends Applet implements Runnable {
+    Thread t1, t2, t3;
+
+    Color signalColor;
+
+    public void init() {
+        setSize(300, 500);
+        signalColor = Color.RED;
+        t1 = new Thread(this, "Red");
+        t2 = new Thread(this, "Yellow");
+        t3 = new Thread(this, "Green");
+        t1.start();
+    }
+
+    public void paint(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(110, 50, 80, 200);
+        g.setColor(signalColor);
+        g.fillOval(120, 60, 60, 60);
+        g.fillOval(120, 140, 60, 60);
+        g.fillOval(120, 220, 60, 60);
+    }
+
+    public void run() {
+        while (true) {
+            try {
+                Thread.sleep(5000); // change signals every 5 seconds
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+
+            if (Thread.currentThread() == t1) {
+                signalColor = Color.RED;
+                repaint();
+                t2.start();
+                try {
+                    t2.join();
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            } else if (Thread.currentThread() == t2) {
+                signalColor = Color.YELLOW;
+                repaint();
+                t3.start();
+                try {
+                    t3.join();
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            } else {
+                signalColor = Color.GREEN;
+                repaint();
+                t1.start();
+                try {
+                    t1.join();
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+}
