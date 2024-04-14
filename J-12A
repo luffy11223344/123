@@ -1,0 +1,35 @@
+package javaapplication2;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+public class JavaApplication2 {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/gururaj";
+        String user = "guru";
+        String password = "root";
+
+        try{
+            // connection
+            Connection connection = DriverManager.getConnection(url, user, password);
+
+            // statement
+            Statement statement = connection.createStatement();
+
+            // query
+            String query = "SELECT COUNT(*) AS records FROM employee";
+
+            ResultSet resultSet = statement.executeQuery(query);
+
+            if (resultSet.next()) {
+                int recordCount = resultSet.getInt("records");
+                System.out.println("Number of records in Employee table: " + recordCount);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
