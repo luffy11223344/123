@@ -1,0 +1,30 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebApplication1._Default" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Change Form Color</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:DropDownList ID="ddlColors" runat="server">
+                <asp:ListItem Text="Red" Value="red"></asp:ListItem>
+                <asp:ListItem Text="Green" Value="green"></asp:ListItem>
+                <asp:ListItem Text="Blue" Value="blue"></asp:ListItem>
+                <asp:ListItem Text="Yellow" Value="yellow"></asp:ListItem>
+            </asp:DropDownList>
+            <asp:Button ID="btnChangeColor" runat="server" Text="Change Color" OnClick="btnChangeColor_Click" />
+        </div>
+    </form>
+
+    <script runat="server">
+        protected void btnChangeColor_Click(object sender, EventArgs e)
+        {
+            string selectedColor = ddlColors.SelectedValue;
+            form1.Style["background-color"] = selectedColor;
+        }
+    </script>
+</body>
+</html>
