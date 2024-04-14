@@ -1,0 +1,45 @@
+Imports System.Windows.Forms
+
+Public Class Form1
+    Private WithEvents TextBox1 As New TextBox()
+    Private WithEvents Label1 As New Label()
+    Private WithEvents Label2 As New Label()
+
+    Private Sub Form1_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+        TextBox1.Text = InputBox("Enter a character: ", "Character Input")
+        InitLabels()
+        CheckCharacter()
+    End Sub
+
+    Private Sub InitLabels()
+        Label1.Text = String.Format("You entered: {0}", TextBox1.Text)
+        Label1.AutoSize = True
+        Label1.Location = New Point(0, 50)
+        Me.Controls.Add(Label1)
+
+        Label2.Text = ""
+        Label2.AutoSize = True
+        Label2.Location = New Point(0, 80)
+        Me.Controls.Add(Label2)
+    End Sub
+
+    Private Sub CheckCharacter()
+        Dim ch As Char = TextBox1.Text.ToLower()
+
+        If Char.IsLetter(ch) Then
+            If ch = "a" Or ch = "e" Or ch = "i" Or ch = "o" Or ch = "u" Then
+                Label2.Text = "It is a vowel."
+            Else
+                Label2.Text = "It is a consonant."
+            End If
+
+            If Char.IsUpper(TextBox1.Text) Then
+                Label2.Text &= " It is uppercase."
+            Else
+                Label2.Text &= " It is lowercase."
+            End If
+        Else
+            Label2.Text = "Invalid input. Please enter a valid character."
+        End If
+    End Sub
+End Class
