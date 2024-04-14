@@ -54,9 +54,9 @@ public class JavaApplication1 extends JFrame {
         String percentage = percentageField.getText();
         String studentClass = classField.getText();
 
-        String url = "jdbc:mysql://localhost:3306/gururaj";
-        String user = "guru";
-        String password = "root";
+        String url = "jdbc:mysql://localhost:3306/dbname";
+        String user = "username";
+        String password = "password";
 
         try (Connection connection = DriverManager.getConnection(url, user, password)) {
             String query = "INSERT INTO student (RNo, SName, Per, Class) VALUES (?, ?, ?, ?)";
