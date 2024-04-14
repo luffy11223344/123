@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Button Color Change</title>
+    <style>
+        .green-button {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .green-button:hover {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <asp:Button ID="btnChangeColor" runat="server" Text="Hover over me" CssClass="green-button" OnClientMouseOver="changeColor" />
+        </div>
+    </form>
+
+    <script>
+        function changeColor() {
+            document.getElementById('<%= btnChangeColor.ClientID %>').style.backgroundColor = "yellow";
+        }
+    </script>
+</body>
+</html>
