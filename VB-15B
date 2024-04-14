@@ -1,0 +1,70 @@
+using System;
+
+class Customer
+{
+    public int CustomerNumber { get; set; }
+    public string Name { get; set; }
+    public string Address { get; set; }
+    public int ItemNumber { get; set; }
+    public int Quantity { get; set; }
+    public double Price { get; set; }
+
+    public double TotalPrice()
+    {
+        return Quantity * Price;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Enter the number of customers: ");
+        int n = Convert.ToInt32(Console.ReadLine());
+
+        Customer[] customers = new Customer[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            customers[i] = new Customer();
+
+            Console.WriteLine("\nCustomer " + (i + 1) + " details:");
+            Console.Write("Customer Number: ");
+            customers[i].CustomerNumber = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Name: ");
+            customers[i].Name = Console.ReadLine();
+
+            Console.Write("Address: ");
+            customers[i].Address = Console.ReadLine();
+
+            Console.Write("Item Number: ");
+            customers[i].ItemNumber = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Quantity: ");
+            customers[i].Quantity = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Price: ");
+            customers[i].Price = Convert.ToDouble(Console.ReadLine());
+        }
+
+        Console.WriteLine("\nCustomer Details:");
+        Console.WriteLine("-------------------------------------------------------------------------");
+        Console.WriteLine("Customer No.\tName\t\tAddress\t\tItem No.\tQuantity\tPrice\t\tTotal Price");
+        Console.WriteLine("-------------------------------------------------------------------------");
+
+        double totalAmount = 0;
+
+        foreach (Customer customer in customers)
+        {
+            Console.WriteLine(customer.CustomerNumber + "\t\t" + customer.Name + "\t\t" + customer.Address + "\t\t" + customer.ItemNumber + "\t\t" + customer.Quantity + "\t\t" + customer.Price + "\t\t" + customer.TotalPrice());
+            totalAmount += customer.TotalPrice();
+        }
+
+        Console.WriteLine("\nTotal Amount of all items: " + totalAmount);
+
+        // Prompt the user to press any key to exit
+        Console.WriteLine("\nPress any key to exit...");
+        Console.ReadKey();
+    }
+}
