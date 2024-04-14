@@ -1,0 +1,32 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sum of First and Last Digits</title>
+</head>
+<body>
+<h1>Sum of First and Last Digits</h1>
+<form action="slip5.jsp" method="post">
+    Enter a number: <input type="number" name="number" required><br>
+    <input type="submit" value="Calculate">
+</form>
+<%
+    if (request.getMethod().equals("POST")) {
+        int number = Integer.parseInt(request.getParameter("number"));
+        int sum = 0;
+        int lastDigit = number % 10;
+        int firstDigit = 0;
+
+        while(number > 0){
+            firstDigit = number % 10;
+            number /= 10;
+        }
+%>
+<p style="color: red; font-size: 18px;">Sum of first and last digits: <%=firstDigit + lastDigit %> </p>
+<%
+    }
+%>
+</body>
+</html>
