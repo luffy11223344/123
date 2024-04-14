@@ -1,0 +1,17 @@
+
+package com.mycompany.mavenproject3;
+
+public class Mavenproject3 {
+    public static void main(String[] args) {
+        for (char c = 'a'; c <= 'z'; c++) {
+            System.out.println(c);
+            try {
+                Thread.sleep(2000); // Sleep for 2 seconds (2000 milliseconds)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
