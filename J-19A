@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Greeting</title>
+</head>
+<body>
+    <%-- Importing necessary classes --%>
+    <%@ page import="java.util.Date" %>
+    <%@ page import="java.text.SimpleDateFormat" %>
+    
+    <%-- Retrieving username from request parameter --%>
+    <% String username = request.getParameter("username"); %>
+    
+    <%-- Getting the current time on the server --%>
+    <% Date currentTime = new Date(); %>
+    <% SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss"); %>
+    <% String currentTimeString = sdf.format(currentTime); %>
+    
+    <%-- Extracting the hour from the current time --%>
+    <% int currentHour = Integer.parseInt(currentTimeString.substring(0, 2)); %>
+    
+    <%-- Greeting message based on the current hour --%>
+    <% String greeting = ""; %>
+    <% if (currentHour >= 0 && currentHour < 12) { %>
+        <% greeting = "Good morning"; %>
+    <% } else if (currentHour >= 12 && currentHour < 18) { %>
+        <% greeting = "Good afternoon"; %>
+    <% } else { %>
+        <% greeting = "Good evening"; %>
+    <% } %>
+    
+    <%-- If the username is submitted, display the greeting message --%>
+    <% if (username != null && !username.isEmpty()) { %>
+        <p><%= greeting %>, <%= username %>!</p>
+    <% } else { %>
+        <%-- Displaying the form to input username --%>
+        <form action="" method="post">
+            Enter your name: <input type="text" name="username">
+            <input type="submit" value="Submit">
+        </form>
+    <% } %>
+</body>
+</html>
