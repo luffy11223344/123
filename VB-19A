@@ -1,0 +1,50 @@
+Imports System.Windows.Forms
+
+Public Class Form1
+    Private WithEvents TextBox1 As New TextBox()
+    Private WithEvents Button1 As New Button()
+    Private WithEvents Label1 As New Label()
+
+    Private Sub Form1_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+        InitTextBox()
+        InitButton()
+        InitLabel()
+    End Sub
+
+    Private Sub InitTextBox()
+        TextBox1.Location = New Point(50, 50)
+        Me.Controls.Add(TextBox1)
+    End Sub
+
+    Private Sub InitButton()
+        Button1.Text = "Check Palindrome"
+        Button1.Location = New Point(200, 50)
+        Me.Controls.Add(Button1)
+    End Sub
+
+    Private Sub InitLabel()
+        Label1.AutoSize = True
+        Label1.Location = New Point(50, 100)
+        Me.Controls.Add(Label1)
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Button1.Click
+        Dim inputString As String = TextBox1.Text
+        If IsPalindrome(inputString) Then
+            Label1.Text = "The entered string is a palindrome."
+        Else
+            Label1.Text = "The entered string is not a palindrome."
+        End If
+    End Sub
+
+    Private Function IsPalindrome(ByVal input As String) As Boolean
+        Dim cleanString As String = input.ToLower().Replace(" ", "")
+        Dim length As Integer = cleanString.Length
+        For i As Integer = 0 To length \ 2
+            If cleanString(i) <> cleanString(length - 1 - i) Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
+End Class
