@@ -1,0 +1,102 @@
+package javaapplication4;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class JavaApplication4 extends JFrame {
+    private JTextField txtRollNo;
+    private JTextField txtName;
+    private JTextField txtPercentage;
+    private JButton btnDisplay;
+
+    private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
+
+    public JavaApplication4() {
+        setTitle("Display Student Record");
+        setSize(300, 150);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(4, 2));
+
+        JLabel lblRollNo = new JLabel("Roll No:");
+        add(lblRollNo);
+
+        txtRollNo = new JTextField();
+        add(txtRollNo);
+
+        JLabel lblName = new JLabel("Name:");
+        add(lblName);
+
+        txtName = new JTextField();
+        add(txtName);
+
+        JLabel lblPercentage = new JLabel("Percentage:");
+        add(lblPercentage);
+
+        txtPercentage = new JTextField();
+        add(txtPercentage);
+
+        btnDisplay = new JButton("Display Record");
+        btnDisplay.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                displayRecord();
+            }
+        });
+        add(btnDisplay);
+
+        setVisible(true);
+    }
+
+    private void connect() throws SQLException {
+        String url = "jdbc:mysql://localhost:3306/gururaj";
+        String username = "guru";
+        String password = "root";
+        connection = DriverManager.getConnection(url, username, password);
+    }
+
+    private void displayRecord() {
+    try {
+        connect();
+        String query = "SELECT * FROM student LIMIT 1";
+        preparedStatement = connection.prepareStatement(query);
+        resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            System.out.println("Record found!");
+            txtRollNo.setText(resultSet.getString("rno"));
+            txtName.setText(resultSet.getString("sname"));
+            txtPercentage.setText(resultSet.getString("per"));
+        } else {
+            System.out.println("No records found!");
+            JOptionPane.showMessageDialog(this, "No records found!");
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    } finally {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new JavaApplication4();
+            }
+        });
+    }
+}
